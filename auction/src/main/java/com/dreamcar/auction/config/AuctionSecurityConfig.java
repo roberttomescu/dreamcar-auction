@@ -13,7 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @Profile("!https")
 public class AuctionSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public SecSecurityConfig() {
+    public AuctionSecurityConfig() {
         super();
     }
 
@@ -21,11 +21,11 @@ public class AuctionSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
         // @formatter:off
         auth.inMemoryAuthentication()
-        .withUser("user1").password("user1Pass").roles("USER")
+        .withUser("user1").password("{noop}Qwerty12").roles("USER")
         .and()
-        .withUser("user2").password("user2Pass").roles("USER")
+        .withUser("user2").password("{noop}Qwerty12").roles("USER")
         .and()
-        .withUser("admin").password("admin0Pass").roles("ADMIN");
+        .withUser("admin").password("{noop}Qwerty12").roles("ADMIN");
         // @formatter:on
     }
 

@@ -12,7 +12,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 @EnableWebMvc
 @Configuration
-public class AuctionCongif extends WebMvcConfigurerAdapter {
+public class AuctionConfig extends WebMvcConfigurerAdapter {
 
     public AuctionConfig() {
         super();
