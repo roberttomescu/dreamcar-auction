@@ -1,5 +1,8 @@
 package com.dreamcar.auction.config;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
@@ -17,16 +20,20 @@ public class AuctionSecurityConfig extends WebSecurityConfigurerAdapter {
         super();
     }
 
+    @Autowired
+    private DataSource securityDataSource;
+    
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-        // @formatter:off
-        auth.inMemoryAuthentication()
-        .withUser("user1").password("{noop}Qwerty12").roles("USER")
-        .and()
-        .withUser("user2").password("{noop}Qwerty12").roles("USER")
-        .and()
-        .withUser("admin").password("{noop}Qwerty12").roles("ADMIN");
-        // @formatter:on
+		/*
+		 * // @formatter:off auth.inMemoryAuthentication()
+		 * .withUser("user1").password("{noop}Qwerty12").roles("USER") .and()
+		 * .withUser("user2").password("{noop}Qwerty12").roles("USER") .and()
+		 * .withUser("admin").password("{noop}Qwerty12").roles("ADMIN");
+		 * // @formatter:on
+		 */
+    	
+    	auth.jdbcAuthentication().dataSource(securityDataSource);
     }
 
     @Override
