@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -64,6 +65,7 @@ public class AuctionConfig implements WebMvcConfigurer {
 
         return bean;
     }
+    
     
     @Bean
     public DataSource securityDataSource() {

@@ -1,21 +1,46 @@
 package com.dreamcar.auction.entities;
 
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name="auctions")
 public class Auction {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column
 	private int id;
+	
+	@Column
 	private String name;
-	//private String description;
-	//private float priceLimit; //only for ROLE_ADMIN
-	//private List<Offer> offers; //only for ROLE_ADMIN
-	//private LocalDate timeLimit;
+	
+	@Column
+	private String description;
+	
+	@Column(name = "time_limit", nullable = false, updatable=false)
+	@Temporal(TemporalType.DATE)
+	private Date timeLimit;
+	
+	//@Column
+	//private Bid topBid;
 	
 	public Auction() {
 		
 	}
 	
-	public Auction(int id, String name) {
-		this.id = id;
+	public Auction(String name, String description, Date timeLimit) {
 		this.name = name;
+		this.description = description;
+		this.timeLimit = timeLimit;
 	}
 
 	public int getId() {
@@ -30,5 +55,25 @@ public class Auction {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public Date getTimeLimit() {
+		return timeLimit;
+	}
+	public void setTimeLimit(Date timeLimit) {
+		this.timeLimit = timeLimit;
+	}
+
+	@Override
+	public String toString() {
+		return "Auction [id=" + id + ", name=" + name + ", description=" + description + ", timeLimit=" + timeLimit
+				+ "]";
+	}
+	
+	
 	
 }
