@@ -22,14 +22,13 @@ public class Bid {
 	@Column
 	private float price;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "auction_id")
-//	private Auction auction;
+	@Column(name = "auction_id")
+	private int auctionId;
 
-	public Bid(String username, float price) {
-		super();
+	public Bid(String username, float price, int auctionId) {
 		this.username = username;
 		this.price = price;
+		this.auctionId = auctionId;
 	}
 	
 	public Bid() {
@@ -60,17 +59,17 @@ public class Bid {
 		this.price = price;
 	}
 
-//	public Auction getAuction() {
-//		return auction;
-//	}
-//
-//	public void setAuction(Auction auction) {
-//		this.auction = auction;
-//	}
+	public int getAuctionId() {
+		return auctionId;
+	}
+
+	public void setAuctionId(int auctionId) {
+		this.auctionId = auctionId;
+	}
 
 	@Override
 	public String toString() {
-		return "Bid [id=" + id + ", username=" + username + ", price=" + price + "]";
+		return "Bid [id=" + id + ", username=" + username + ", price=" + price + ", auctionId=" + auctionId + "]";
 	}
 	
 	

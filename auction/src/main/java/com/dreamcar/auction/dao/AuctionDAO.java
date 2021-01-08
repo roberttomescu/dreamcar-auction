@@ -10,4 +10,6 @@ public interface AuctionDAO {
 
 	public void saveOrUpdateAuction(Auction theAuction);
 
+	public Auction findById(int id);
+
 }
