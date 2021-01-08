@@ -39,4 +39,14 @@ public class AuctionDAOImpl implements AuctionDAO {
 		return auctions;
 	}
 
+	@Override
+	public void saveOrUpdateAuction(Auction theAuction) {
+		
+		// get current hibernate session
+		Session currentSession = entityManager.unwrap(Session.class);
+		
+		// save customer
+		currentSession.saveOrUpdate(theAuction);
+	}
+
 }

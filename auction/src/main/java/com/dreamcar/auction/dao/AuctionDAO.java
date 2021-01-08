@@ -8,4 +8,6 @@ public interface AuctionDAO {
 	
 	public List<Auction> getAuctions();
 
+	public void saveOrUpdateAuction(Auction theAuction);
+
 }

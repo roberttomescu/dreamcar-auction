@@ -22,9 +22,11 @@ public class AuctionServiceImpl implements AuctionService {
 	}
 
 	@Override
-	public void setAuctions() {
-		// TODO Auto-generated method stub
-
+	@Transactional
+	public void saveOrUpdateAuction(Auction theAuction) {
+		
+		auctionDAO.saveOrUpdateAuction(theAuction);
 	}
+
 
 }

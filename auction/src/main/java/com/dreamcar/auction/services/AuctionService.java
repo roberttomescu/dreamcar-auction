@@ -7,7 +7,7 @@ import com.dreamcar.auction.entities.Auction;
 public interface AuctionService {
 	
 	public List<Auction> getAuctions();
-	
-	public void setAuctions();
+
+	public void saveOrUpdateAuction(Auction theAuction);
 
 }
