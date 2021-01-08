@@ -23,7 +23,6 @@ public class AuctionDAOImpl implements AuctionDAO {
 	}
 	
 	@Override
-	@Transactional
 	public List<Auction> getAuctions() {
 		
 		// get current hibernate session

@@ -15,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="auctions")
 public class Auction {
@@ -31,7 +33,8 @@ public class Auction {
 	private String description;
 	
 	@Column(name = "time_limit", nullable = false, updatable=false)
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
+	//@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss", timezone="Europe/Athens")
 	private Date timeLimit;
 	
 	@Column(name = "price_limit")

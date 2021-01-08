@@ -7,22 +7,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dreamcar.auction.dao.AuctionDAO;
 import com.dreamcar.auction.entities.Auction;
+import com.dreamcar.auction.services.AuctionService;
 
 @RestController
 @RequestMapping("/api")
 public class AuctionController {
 	
-	private AuctionDAO auctionDAO;
+	private AuctionService auctionService;
 	
 	@Autowired
-	public AuctionController(AuctionDAO theAuctionDAO) {
-		auctionDAO = theAuctionDAO;
+	public AuctionController(AuctionService auctionService) {
+		this.auctionService = auctionService;
 	}
 
 	@GetMapping("/auctions")
 	public List<Auction> getAuctions() {
-		return auctionDAO.getAuctions();
+		return auctionService.getAuctions();
 	}
 }
