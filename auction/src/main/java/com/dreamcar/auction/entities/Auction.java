@@ -1,8 +1,11 @@
 package com.dreamcar.auction.entities;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,8 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="auctions")
@@ -99,7 +100,7 @@ public class Auction {
 		this.priceLimit = priceLimit;
 	}
 
-	public boolean isActive() {
+	public boolean getActive() {
 		return active;
 	}
 
@@ -127,6 +128,19 @@ public class Auction {
 		}
 		
 		bids.add(tempBid);
+	}
+	
+	public float findMinPrice(){
+		try {
+		return this.bids
+				.stream()
+				.min(Comparator.comparing(Bid::getPrice))
+				.orElseThrow(NoSuchElementException::new)
+				.getPrice();
+		}
+		catch (NoSuchElementException e) {
+			return Float.MAX_VALUE;
+		}
 	}
 	
 }
