@@ -6,12 +6,12 @@ import java.util.logging.Logger;
 
 import javax.sql.DataSource;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -22,6 +22,7 @@ import org.springframework.web.servlet.view.JstlView;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+@EnableScheduling
 @EnableWebMvc
 @Configuration
 @PropertySource("classpath:persistence-mysql.properties")
@@ -106,4 +107,5 @@ public class AuctionConfig implements WebMvcConfigurer {
     	
     	return intPropertyValue;
     }
+    
 }

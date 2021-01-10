@@ -57,4 +57,36 @@ public class AuctionDAOImpl implements AuctionDAO {
 		return currentSession.get(Auction.class, id);
 	}
 
+	@Override
+	public List<Auction> getActiveAuctions() {
+		// get current hibernate session
+		Session currentSession = entityManager.unwrap(Session.class);
+		
+		// create query
+		Query<Auction> theQuery =
+				currentSession.createQuery("from Auction where active = 1", Auction.class);
+		
+		// execute query and get result list
+		List<Auction> auctions = theQuery.getResultList();
+		
+		// return results
+		return auctions;
+	}
+
+	@Override
+	public List<Auction> getInactiveAuctionsWithoutEmailSent() {
+		// get current hibernate session
+		Session currentSession = entityManager.unwrap(Session.class);
+		
+		// create query
+		Query<Auction> theQuery =
+				currentSession.createQuery("from Auction where active = 0 and email_sent = 0", Auction.class);
+		
+		// execute query and get result list
+		List<Auction> auctions = theQuery.getResultList();
+		
+		// return results
+		return auctions;
+	}
+
 }

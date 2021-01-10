@@ -1,7 +1,6 @@
 package com.dreamcar.auction.entities;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -17,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name="auctions")
@@ -48,16 +49,21 @@ public class Auction {
 	@JoinColumn(name = "auction_id")
 	private List<Bid> bids;
 	
+	@Column(name = "email_sent")
+	@JsonIgnore
+	private boolean emailSent;
+	
 	public Auction() {
 		
 	}
 	
-	public Auction(String name, String description, Date timeLimit, int priceLimit, boolean active) {
+	public Auction(String name, String description, Date timeLimit, int priceLimit, boolean active, boolean emailSent) {
 		this.name = name;
 		this.description = description;
 		this.timeLimit = timeLimit;
 		this.priceLimit = priceLimit;
 		this.active = active;
+		this.emailSent = emailSent;
 	}
 	
 	public int getId() {
@@ -116,10 +122,18 @@ public class Auction {
 		this.bids = bids;
 	}
 
+	public boolean isEmailSent() {
+		return emailSent;
+	}
+
+	public void setEmailSent(boolean emailSent) {
+		this.emailSent = emailSent;
+	}
+
 	@Override
 	public String toString() {
 		return "Auction [id=" + id + ", name=" + name + ", description=" + description + ", timeLimit=" + timeLimit
-				+ ", priceLimit=" + priceLimit + ", active=" + active + "]";
+				+ ", priceLimit=" + priceLimit + ", active=" + active + ", emailSent=" + emailSent + "]";
 	}	
 	
 	public void add(Bid tempBid) {

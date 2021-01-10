@@ -1,8 +1,10 @@
 package com.dreamcar.auction.services;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +14,6 @@ import com.dreamcar.auction.entities.Auction;
 import com.dreamcar.auction.entities.Bid;
 import com.dreamcar.auction.errors.AuctionNotFoundException;
 import com.dreamcar.auction.errors.InactiveAuctionException;
-import com.dreamcar.auction.errors.NegativePriceException;
 import com.dreamcar.auction.errors.PriceHigherThanMinPriceException;
 
 @Service
@@ -55,7 +56,7 @@ public class AuctionServiceImpl implements AuctionService {
 		}
 
 		// validate the auction is active
-		if (auction.getActive() == false) {
+		if (auction.getActive() == false || auction.getTimeLimit().before(new Date())) {
 			throw new InactiveAuctionException();
 		}
 		
@@ -75,5 +76,45 @@ public class AuctionServiceImpl implements AuctionService {
 		//save bid
 		bidDAO.saveOrUpdateBid(theBid);
 	}
+	
+    
+    @Scheduled(fixedRate = 15000)
+    @Transactional
+    public void scheduledCheckAuctionTimeoutTask() {
+    	
+    	// get active auctions
+    	List<Auction> activeAuctions = auctionDAO.getActiveAuctions();
+    	
+    	// set inactive if after time limit
+    	activeAuctions.forEach(auction -> {
+            if (auction.getTimeLimit().before(new Date())) {
+            	auction.setActive(false);
+            	auctionDAO.saveOrUpdateAuction(auction);
+            	System.out.println("<<<debug>>> scheduledCheckAuctionTimeoutTask: Time limit reached for auction with id: " + auction.getId());
+            }
+    	});
+
+    }
+    
+    
+    @Scheduled(fixedRate = 30000)
+    @Transactional
+    public void scheduledAnnouncementTask() {
+    	
+    	// get inactive auctions without email_sent
+    	List<Auction> activeAuctions = auctionDAO.getInactiveAuctionsWithoutEmailSent();
+    	 	
+    	// send email and set email_sent to true
+    	activeAuctions.forEach(auction -> {
+            sendEmail(auction);
+            auction.setEmailSent(true);
+            auctionDAO.saveOrUpdateAuction(auction);
+    	});
+
+    }
+    
+    private void sendEmail(Auction auction) {
+    	System.out.println("Sent email for auction with id: " + auction.getId());
+    }
 
 }
