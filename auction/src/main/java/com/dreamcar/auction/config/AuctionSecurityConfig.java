@@ -25,14 +25,6 @@ public class AuctionSecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-		/*
-		 * // @formatter:off auth.inMemoryAuthentication()
-		 * .withUser("user1").password("{noop}Qwerty12").roles("USER") .and()
-		 * .withUser("user2").password("{noop}Qwerty12").roles("USER") .and()
-		 * .withUser("admin").password("{noop}Qwerty12").roles("ADMIN");
-		 * // @formatter:on
-		 */
-    	
     	auth.jdbcAuthentication().dataSource(securityDataSource);
     }
 

@@ -23,6 +23,13 @@ public class AuctionServiceImpl implements AuctionService {
 	private AuctionDAO auctionDAO;
 	@Autowired
 	private BidDAO bidDAO;
+	
+	private EmailService emailService;
+	
+	@Autowired
+	public void setEmailService(EmailService emailService) {
+		this.emailService = emailService;
+	}
 
 	@Override
 	@Transactional
@@ -106,15 +113,27 @@ public class AuctionServiceImpl implements AuctionService {
     	 	
     	// send email and set email_sent to true
     	activeAuctions.forEach(auction -> {
-            sendEmail(auction);
+    		
+    		//get top bid for auction
+    		Bid topBid = auction.findTopBid();
+    		
+    		//get email for topBid
+    		String email = topBid.getUsername();
+    		
+    		//fake email for debugging
+    		sendEmail(auction, email);
+    		
+            emailService.sendBidWinnerMail(auction, "mingeam@gmail.com");
             auction.setEmailSent(true);
+            
             auctionDAO.saveOrUpdateAuction(auction);
     	});
 
     }
     
-    private void sendEmail(Auction auction) {
-    	System.out.println("Sent email for auction with id: " + auction.getId());
+    // old email method used for testing
+    private void sendEmail(Auction auction, String email) {
+    	System.out.println("Sent email for auction with id: " + auction.getId() + " to email: " + email);
     }
 
 }

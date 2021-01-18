@@ -144,7 +144,7 @@ public class Auction {
 		bids.add(tempBid);
 	}
 	
-	public float findMinPrice(){
+	public float findMinPrice() {
 		try {
 		return this.bids
 				.stream()
@@ -155,6 +155,13 @@ public class Auction {
 		catch (NoSuchElementException e) {
 			return Float.MAX_VALUE;
 		}
+	}
+	
+	public Bid findTopBid() {
+		return this.bids
+				.stream()
+				.min(Comparator.comparing(Bid::getPrice))
+				.orElseThrow(NoSuchElementException::new);
 	}
 	
 }
