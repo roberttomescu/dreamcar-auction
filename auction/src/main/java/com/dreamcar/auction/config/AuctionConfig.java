@@ -1,29 +1,43 @@
 package com.dreamcar.auction.config;
 
+
+import java.beans.PropertyVetoException;
+import java.util.logging.Logger;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+@EnableScheduling
 @EnableWebMvc
 @Configuration
-public class AuctionConfig extends WebMvcConfigurerAdapter {
+@PropertySource("classpath:persistence-mysql.properties")
+public class AuctionConfig implements WebMvcConfigurer {
+	
+	@Autowired
+	private Environment env;
+	private Logger logger = Logger.getLogger(getClass().getName());
 
     public AuctionConfig() {
         super();
     }
 
-    // API
-
     @Override
     public void addViewControllers(final ViewControllerRegistry registry) {
-        super.addViewControllers(registry);
-
         registry.addViewController("/anonymous.html");
 
         registry.addViewController("/login.html");
@@ -52,4 +66,46 @@ public class AuctionConfig extends WebMvcConfigurerAdapter {
 
         return bean;
     }
+    
+    
+    @Bean
+    public DataSource securityDataSource() {
+    	
+    	// create connection pool
+    	ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
+    	
+    	// set the jdbc driver class
+    	try {
+			securityDataSource.setDriverClass(env.getRequiredProperty("jdbc.driver"));
+		} catch (PropertyVetoException e) {
+			throw new RuntimeException(e);
+		}
+    	
+    	// log the connection properties
+    	logger.info(">>> jdbc.url=" + env.getProperty("jdbc.url"));
+    	logger.info(">>> jdbc.user=" + env.getProperty("jdbc.user"));
+    	
+    	// set database connection properties
+    	securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
+    	securityDataSource.setUser(env.getProperty("jdbc.user"));
+    	securityDataSource.setPassword(env.getProperty("jdbc.password"));
+    	
+    	// set connection pool properties
+    	securityDataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
+    	securityDataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
+    	securityDataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
+    	securityDataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
+    	
+    	return securityDataSource;
+    }
+    
+    // helper method for reading env property and converting to int
+    
+    private int getIntProperty(String propertyName) {
+    	String propertyValue = env.getProperty(propertyName);
+    	int intPropertyValue = Integer.parseInt(propertyValue);
+    	
+    	return intPropertyValue;
+    }
+    
 }
