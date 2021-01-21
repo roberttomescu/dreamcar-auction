@@ -4,22 +4,22 @@
 <head></head>
 
 <body>
+
+	<security:authorize access="hasRole('ROLE_USER')">
+      <div id="navigation"></div>
+    </security:authorize>
+
     <h1>This is the body of the sample view</h1>
+    
 
     <security:authorize access="hasRole('ROLE_USER')">
-        This text is only visible to a user
-        <br/> <br/>
-        <a href="<c:url value="/admin/adminpage.html" />">Restricted Admin Page</a>
-        <br/> <br/>
+      <div id="add-auction-form"></div>
     </security:authorize>
 	
     <security:authorize access="hasRole('ROLE_ADMIN')">
-        This text is only visible to an admin
-        <br/>
-        <a href="<c:url value="/admin/adminpage.html" />">Admin Page</a>
-        <br/>
+		<div id="all-auctions"></div>
     </security:authorize>
-
+    
     <a href="<c:url value="/perform_logout" />">Logout</a>
     
     
@@ -32,6 +32,7 @@
 	<script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
-    <script src="App.js" type="text/babel"></script>
+    <script src="AddAuctionForm.js" type="text/babel"></script>
+    <script src="Auctions.js" type="text/babel"></script>
 
 </body>
