@@ -34,6 +34,9 @@ public class AuctionController {
 		// force save id to 0 to force create new auction
 		theAuction.setId(0);
 		
+		// force new auction to be active when added
+		theAuction.setActive(true);
+		
 		auctionService.saveOrUpdateAuction(theAuction);
 		
 		return theAuction;

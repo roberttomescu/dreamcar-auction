@@ -31,7 +31,6 @@
     <script src="https://unpkg.com/react@16.4.1/umd/react.production.min.js"></script>
 	<script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.production.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/react-datetime-picker@3.0.4/dist/entry.min.js"></script>
 	
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     

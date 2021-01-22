@@ -37,6 +37,11 @@ public class EmailService {
         	System.out.println(e.toString());
         }
     }
+
+	public void sendAuctionNoBidsMail(Auction auction) {
+		// TODO Auto-generated method stub
+		
+	}
   
 }
 

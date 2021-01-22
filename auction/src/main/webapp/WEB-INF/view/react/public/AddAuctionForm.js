@@ -1,15 +1,17 @@
 const { Component } = React;
 const { render } = ReactDOM;
 const axios = axios;
-const { DateTimePicker } = react-datetime-picker;
 
+const ADD_AUCTION_API = 'http://localhost:8080/api/auction'
 
 class AddAuctionForm extends React.Component{
 	constructor(props) {
     super(props);
     this.state = {name: '',
 				description: '',
-				timeout: ''};
+				timeout_date: '',
+				timeout_hour: '',
+				pricelimit: ''};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,9 +24,33 @@ class AddAuctionForm extends React.Component{
   }
 
   handleSubmit(event) {
-    alert('A bid was submitted: ' + this.state.value);
-    event.preventDefault();
+    alert('A bid was submitted for ' + this.state.name);
+    //event.preventDefault();
+	console.log("inside submit handle 1");
+	var time = this.calculateTime(this.state.timeout_hour);
+	console.log(time);
+    const body = { name: this.state.name,
+					description: this.state.description,
+					timeLimit: this.state.timeout_date + " " + this.state.timeout_hour,
+					priceLimit: this.state.pricelimit
+					 };
+    axios.post(ADD_AUCTION_API, body)
+        .then(response => {
+		  console.log('Success', response);
+		}).catch(error => {
+		  console.log('Error', error);
+		});
   }
+
+   calculateTime(time) {
+	  var [h,m] = time.split(":");
+	  var hours = h%12 + 12*(h%12 == 0);
+	  var minutes = m;
+	  var ampm = "AM";
+	  if (h >= 12)
+		var ampm = "PM"
+	  return "" + hours + ":" + minutes + " " + ampm;
+}
 	
     render() {
 		return (	
@@ -33,18 +59,34 @@ class AddAuctionForm extends React.Component{
 	            <h1>Section for adding a new auction</h1>
 	        </div>
 			<form onSubmit={this.handleSubmit}>
+			<div>
 				<label>
 					Name 
 				</label>
 				<input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
+			</div>
+			<div>
 				<label>
 					Description 
 				</label>
 				<textarea type="text" name="description" value={this.state.description} onChange={this.handleChange} />
+			</div>
+			<div>
 				<label>
-					Timeout date
+					Timeout
 				</label>
-				<DateTimePicker name="timeout" value={this.state.description} onChange={this.handleChange} />
+				<input type="date" name="timeout_date" value={this.state.timeout_date} onChange={this.handleChange} />
+				<input type="time" name="timeout_hour" value={this.state.timeout_hour} onChange={this.handleChange} />
+			</div>
+			<div>
+				<label>
+					Price Limit
+				</label>
+				<input type="number" name="pricelimit" value={this.state.pricelimit} onChange={this.handleChange} min="0"/>
+			</div>
+			<div>
+				<input type="submit" value="Add Auction" />
+			</div>
 			 </form>
 		</div>
 		);
