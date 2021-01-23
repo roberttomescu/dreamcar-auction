@@ -4,7 +4,7 @@ const axios = axios;
 
 const ADD_AUCTION_API = 'http://localhost:8080/api/auction'
 
-class AddAuctionForm extends React.Component{
+class AddAuctionForm extends Component{
 	constructor(props) {
     super(props);
     this.state = {name: '',
@@ -18,17 +18,14 @@ class AddAuctionForm extends React.Component{
   }
 
   handleChange(event) {
-	  const value = event.target.value;
+  	const value = event.target.value;
 	this.setState({
 		...this.state, [event.target.name]: value});
   }
 
   handleSubmit(event) {
-    alert('A bid was submitted for ' + this.state.name);
-    //event.preventDefault();
-	console.log("inside submit handle 1");
+    event.preventDefault();
 	var time = this.calculateTime(this.state.timeout_hour);
-	console.log(time);
     const body = { name: this.state.name,
 					description: this.state.description,
 					timeLimit: this.state.timeout_date + " " + this.state.timeout_hour,
@@ -37,6 +34,7 @@ class AddAuctionForm extends React.Component{
     axios.post(ADD_AUCTION_API, body)
         .then(response => {
 		  console.log('Success', response);
+		  window.location.reload();	
 		}).catch(error => {
 		  console.log('Error', error);
 		});

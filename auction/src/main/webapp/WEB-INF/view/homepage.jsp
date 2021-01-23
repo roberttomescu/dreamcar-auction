@@ -23,11 +23,6 @@
     <a href="<c:url value="/perform_logout" />">Logout</a>
     
     
-    <div id="root">
-      <div id="App"></div>
-    </div>
-    
-    
     <script src="https://unpkg.com/react@16.4.1/umd/react.production.min.js"></script>
 	<script src="https://unpkg.com/react-dom@16.4.1/umd/react-dom.production.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>

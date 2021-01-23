@@ -10,7 +10,7 @@ class ListAuctionsComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            auctions: [],
+            allAuctions: [],
             message: null
         }
         this.refreshAuctions = this.refreshAuctions.bind(this)
@@ -28,10 +28,31 @@ class ListAuctionsComponent extends Component {
         this.retrieveAllAuctions()
             .then(
                 response => {
-                    this.setState({ auctions: response.data });         
+                    this.setState({ allAuctions: response.data });         
 				}
             )
     }
+
+	convertTimestampToDatetime(timestamp) {
+		var date = new Date(timestamp * 1000);
+		const enUKFormatter = new Intl.DateTimeFormat('en-UK');
+		return enUKFormatter.format(date);
+	}
+	
+	getStatusFromActive(active) {
+		if (active == true)
+			return "Active";
+		else {
+			return "Closed";
+		}
+	}
+	
+	checkTopBid(bid) {
+		if (bid == -1)
+			return "no bids yet";
+		else 
+			return bid;
+	}
 
     render() {
         return (
@@ -44,18 +65,24 @@ class ListAuctionsComponent extends Component {
                                 <th>Id</th>
                                 <th>Name</th>
 								<th>Description</th>
-								<th>Time_Limit</th>
+								<th>Time Limit</th>
+								<th>Top Bid</th>
+								<th>Status</th>
+								<th>Make Bid</th>
                             </tr>
                         </thead>
                         <tbody>
 							{
-								this.state.auctions.map(
+								this.state.allAuctions.map(
 									auction =>
 									<tr key={auction.id}>
 		                                <td>{auction.id}</td>
 										<td>{auction.name}</td>
 										<td>{auction.description}</td>
-										<td>{auction.timeLimit}</td>		                                
+										<td>{"" + auction.timeLimit}</td>
+										<td style={{ textAlign: 'center', verticalAlign: 'middle'}}>{this.checkTopBid(auction.topBidValue)}</td>
+										<td style={{ textAlign: 'center', verticalAlign: 'middle'}}>{this.getStatusFromActive(auction.active)}</td>
+										<td style={{ textAlign: 'center', verticalAlign: 'middle'}}>nothing here yet</td>	                                
 		                            </tr> 
 								)
 							}

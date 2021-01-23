@@ -165,4 +165,13 @@ public class Auction {
 				.orElseThrow(NoSuchElementException::new);
 	}
 	
+	public float getTopBidValue() {
+		try {
+			return this.findTopBid().getPrice();
+		}
+		catch (NoSuchElementException e) {
+			return -1;
+		}
+	}
+	
 }

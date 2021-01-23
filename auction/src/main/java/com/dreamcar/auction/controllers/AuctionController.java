@@ -37,7 +37,7 @@ public class AuctionController {
 		// force new auction to be active when added
 		theAuction.setActive(true);
 		
-		auctionService.saveOrUpdateAuction(theAuction);
+		//auctionService.saveOrUpdateAuction(theAuction);
 		
 		return theAuction;
 	}
