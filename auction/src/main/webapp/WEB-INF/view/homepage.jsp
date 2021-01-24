@@ -12,11 +12,11 @@
     <h1>This is the body of the sample view</h1>
     
 
-    <security:authorize access="hasRole('ROLE_USER')">
+    <security:authorize access="hasRole('ROLE_ADMIN')">
       <div id="add-auction-form"></div>
     </security:authorize>
 	
-    <security:authorize access="hasRole('ROLE_ADMIN')">
+    <security:authorize access="hasRole('ROLE_USER')">
 		<div id="all-auctions"></div>
     </security:authorize>
     

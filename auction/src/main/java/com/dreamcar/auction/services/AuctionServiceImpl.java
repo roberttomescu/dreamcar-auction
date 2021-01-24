@@ -52,6 +52,11 @@ public class AuctionServiceImpl implements AuctionService {
 	}
 	
 	@Override
+	public List<Bid> findBidsByUsername(String name) {
+		return bidDAO.findByUsername(name);
+	}
+	
+	@Override
 	@Transactional
 	public void saveOrUpdateBid(Bid theBid) {
 		

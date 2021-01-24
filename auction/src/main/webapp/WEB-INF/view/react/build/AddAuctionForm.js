@@ -80,7 +80,7 @@ class AddAuctionForm extends Component{
 				<label>
 					Price Limit
 				</label>
-				<input type="number" name="pricelimit" value={this.state.pricelimit} onChange={this.handleChange} min="0"/>
+				<input type="number" name="pricelimit" value={this.state.pricelimit} onChange={this.handleChange} min="0" step="0.01"/>
 			</div>
 			<div>
 				<input type="submit" value="Add Auction" />

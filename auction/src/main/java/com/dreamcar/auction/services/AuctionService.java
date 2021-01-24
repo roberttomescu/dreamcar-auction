@@ -15,4 +15,6 @@ public interface AuctionService {
 	
 	public void saveOrUpdateBid(Bid theBid);
 
+	public List<Bid> findBidsByUsername(String name);
+
 }

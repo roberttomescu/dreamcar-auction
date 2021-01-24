@@ -21,10 +21,10 @@ public class EmailService {
 
     public void sendBidWinnerMail(Auction auction, String email) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("email");
+        message.setTo(email);
         message.setSubject("Congratulations! You have won the auction for " + auction.getName());
         message.setFrom(from);
-        message.setText(auction.getName() + ", you have won the auction for " + auction.getName() + "\n\n"
+        message.setText("You have won the auction for " + auction.getName() + "\n\n"
         				+ "The price you won with is " + auction.findTopBid().getPrice());
         
         System.out.println("from: " + from);
