@@ -51,12 +51,23 @@ class AddAuctionForm extends Component{
 }
 	
     render() {
+		const rootStyle = {
+			  right: "0",
+			  left: "0",
+			  marginRight: "auto",
+			  marginLeft: "auto",
+			  overflow: "hidden",
+			  display: "flex",
+			  alignItems: "center",
+			  justifyContent: "center",
+			  width: "100%",
+			  borderRadius: ".19rem",
+			  boxShadow: "0px .19rem .41rem rgba(0,0,0,.25)",
+		}
 		return (	
-		<div>		
-			<div>
-	            <h1>Section for adding a new auction</h1>
-	        </div>
+		<div style={rootStyle}>		
 			<form onSubmit={this.handleSubmit}>
+            <h1>Add a new auction</h1>
 			<div>
 				<label>
 					Name 

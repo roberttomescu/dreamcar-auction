@@ -9,7 +9,7 @@
       <div id="navigation"></div>
     </security:authorize>
 
-    <h1>This is the body of the sample view</h1>
+    <h1>Dreamcar Auctions</h1>
     
 
     <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -19,6 +19,8 @@
     <security:authorize access="hasRole('ROLE_USER')">
 		<div id="all-auctions"></div>
     </security:authorize>
+    
+    <br><br>
     
     <a href="<c:url value="/perform_logout" />">Logout</a>
     
