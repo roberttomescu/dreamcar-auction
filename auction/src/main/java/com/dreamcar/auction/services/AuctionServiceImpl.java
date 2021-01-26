@@ -2,6 +2,7 @@ package com.dreamcar.auction.services;
 
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -48,6 +49,11 @@ public class AuctionServiceImpl implements AuctionService {
 	@Transactional
 	public Auction findAuctionById(int id) {
 		return auctionDAO.findById(id);
+	}
+	
+	@Override
+	public List<Bid> findBidsByUsername(String name) {
+		return bidDAO.findByUsername(name);
 	}
 	
 	@Override
@@ -114,26 +120,24 @@ public class AuctionServiceImpl implements AuctionService {
     	// send email and set email_sent to true
     	activeAuctions.forEach(auction -> {
     		
-    		//get top bid for auction
-    		Bid topBid = auction.findTopBid();
-    		
-    		//get email for topBid
-    		String email = topBid.getUsername();
-    		
-    		//fake email for debugging
-    		sendEmail(auction, email);
-    		
-            emailService.sendBidWinnerMail(auction, "mingeam@gmail.com");
-            auction.setEmailSent(true);
-            
+    		try {
+	    		//get top bid for auction
+	    		Bid topBid = auction.findTopBid();
+	    		
+	    		//get email for topBid
+	    		String email = topBid.getUsername();
+	    		
+	            emailService.sendBidWinnerMail(auction, email);
+	            auction.setEmailSent(true);
+    		}
+    		catch (NoSuchElementException e) {
+    			emailService.sendAuctionNoBidsMail(auction);
+    			auction.setEmailSent(true);
+    		}
+	            
             auctionDAO.saveOrUpdateAuction(auction);
     	});
 
-    }
-    
-    // old email method used for testing
-    private void sendEmail(Auction auction, String email) {
-    	System.out.println("Sent email for auction with id: " + auction.getId() + " to email: " + email);
     }
 
 }

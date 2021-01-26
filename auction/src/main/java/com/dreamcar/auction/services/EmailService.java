@@ -14,6 +14,8 @@ public class EmailService {
     private String from;
 
     private final JavaMailSender sender;
+    
+    private final String adminEmail = "robert.tomescu@gmail.com";
 
     public EmailService(JavaMailSender sender) {
         this.sender = sender;
@@ -21,11 +23,11 @@ public class EmailService {
 
     public void sendBidWinnerMail(Auction auction, String email) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("email");
+        message.setTo(adminEmail);
         message.setSubject("Congratulations! You have won the auction for " + auction.getName());
         message.setFrom(from);
-        message.setText(auction.getName() + ", you have won the auction for " + auction.getName() + "\n\n"
-        				+ "The price you won with is " + auction.findTopBid().getPrice());
+        message.setText(email + ", you have won the auction for " + auction.getName() + "!\n\n"
+        				+ "The price you won with is " + auction.findTopBid().getPrice() + "!");
         
         System.out.println("from: " + from);
         System.out.println("to: " + email);
@@ -37,6 +39,22 @@ public class EmailService {
         	System.out.println(e.toString());
         }
     }
+
+	public void sendAuctionNoBidsMail(Auction auction) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(adminEmail);
+        message.setSubject("Auction for " + auction.getName() + " has expired wihout any bids");
+        message.setFrom(from);
+        message.setText("The auction for " + auction.getName() + " expired on " + auction.getTimeLimit() + " without any bids.");
+        
+        try {
+        this.sender.send(message);
+        }
+        catch (Exception e) {
+        	System.out.println(e.toString());
+        }
+		
+	}
   
 }
 

@@ -1,5 +1,7 @@
 package com.dreamcar.auction.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.trace.http.HttpTrace.Principal;
 import org.springframework.security.core.Authentication;
@@ -43,6 +45,11 @@ public class BidController {
 		auctionService.saveOrUpdateBid(theBid);
 		
 		return theBid;
+	}
+	
+	@GetMapping("/yourBids")
+	public List<Bid> getBids(Authentication authentication) {
+		return auctionService.findBidsByUsername(authentication.getName());
 	}
 	
 }
