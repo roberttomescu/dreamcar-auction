@@ -51,38 +51,58 @@ class AddAuctionForm extends Component{
 }
 	
     render() {
+		const rootStyle = {
+			  right: "0",
+			  left: "0",
+			  marginRight: "auto",
+			  marginLeft: "auto",
+			  overflow: "hidden",
+			  display: "flex",
+			  alignItems: "center",
+			  justifyContent: "center",
+			  width: "100%",
+			  borderRadius: ".19rem",
+			  boxShadow: "0px .19rem .41rem rgba(0,0,0,.25)",
+		}
+		const formStyle = {
+			fontFamily:"'Montserrat',sans-serif",
+			position:"relative",
+			paddingBlock: "50px"
+		}
+		const labelStyle = {
+			marginBottom: "10px",
+			display: "block"
+		}
 		return (	
-		<div>		
-			<div>
-	            <h1>Section for adding a new auction</h1>
-	        </div>
-			<form onSubmit={this.handleSubmit}>
-			<div>
+		<div style={rootStyle}>		
+			<form onSubmit={this.handleSubmit} style={formStyle}>
+            <h1>Add a new auction</h1>
+			<div style={labelStyle}>
 				<label>
 					Name 
 				</label>
 				<input type="text" name="name" value={this.state.name} onChange={this.handleChange} />
 			</div>
-			<div>
+			<div style={labelStyle}>
 				<label>
 					Description 
 				</label>
 				<textarea type="text" name="description" value={this.state.description} onChange={this.handleChange} />
 			</div>
-			<div>
+			<div style={labelStyle}>
 				<label>
 					Timeout
 				</label>
 				<input type="date" name="timeout_date" value={this.state.timeout_date} onChange={this.handleChange} />
 				<input type="time" name="timeout_hour" value={this.state.timeout_hour} onChange={this.handleChange} />
 			</div>
-			<div>
+			<div style={labelStyle}>
 				<label>
 					Price Limit
 				</label>
 				<input type="number" name="pricelimit" value={this.state.pricelimit} onChange={this.handleChange} min="0" step="0.01"/>
 			</div>
-			<div>
+			<div style={labelStyle}>
 				<input type="submit" value="Add Auction" />
 			</div>
 			 </form>

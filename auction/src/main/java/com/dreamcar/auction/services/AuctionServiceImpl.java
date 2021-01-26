@@ -127,10 +127,7 @@ public class AuctionServiceImpl implements AuctionService {
 	    		//get email for topBid
 	    		String email = topBid.getUsername();
 	    		
-	    		//fake email for debugging
-	    		sendEmail(auction, email);
-	    		
-	            emailService.sendBidWinnerMail(auction, "mingeam@gmail.com");
+	            emailService.sendBidWinnerMail(auction, email);
 	            auction.setEmailSent(true);
     		}
     		catch (NoSuchElementException e) {
@@ -141,11 +138,6 @@ public class AuctionServiceImpl implements AuctionService {
             auctionDAO.saveOrUpdateAuction(auction);
     	});
 
-    }
-    
-    // old email method used for testing
-    private void sendEmail(Auction auction, String email) {
-    	System.out.println("Sent email for auction with id: " + auction.getId() + " to email: " + email);
     }
 
 }

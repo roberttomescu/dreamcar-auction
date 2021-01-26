@@ -3,7 +3,7 @@
 <html>
 <head></head>
 
-<body>
+<body style="background: #e9e9e9; font-family:'Montserrat',sans-serif">
 
 	<security:authorize access="hasRole('ROLE_USER')">
       <div id="navigation"></div>
@@ -20,7 +20,7 @@
 		<div id="all-auctions"></div>
     </security:authorize>
     
-    <br><br>
+    <br>
     
     <a href="<c:url value="/perform_logout" />">Logout</a>
     

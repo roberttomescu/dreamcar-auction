@@ -115,7 +115,7 @@ class ListAuctionsComponent extends Component {
 	
 	checkTopBid(bid) {
 		if (bid == -1)
-			return "no bids yet";
+			return "No bids yet";
 		else 
 			return bid;
 	}
@@ -184,14 +184,44 @@ class ListAuctionsComponent extends Component {
   }
 
     render() {
+		const rootStyle1 = {
+			  right: "0",
+			  left: "0",
+			  marginRight: "auto",
+			  marginLeft: "auto",
+			  overflow: "hidden",
+			  display: "flex",
+			  alignItems: "center",
+			  justifyContent: "center",
+			  width: "100%",
+			  borderRadius: ".19rem",
+			  boxShadow: "0px .19rem .41rem rgba(0,0,0,.25)"
+		}
+		const rootStyle2 = {
+			  right: "0",
+			  left: "0",
+			  marginRight: "auto",
+			  marginLeft: "auto",
+			  overflow: "hidden",
+			  display: "flex",
+			  alignItems: "center",
+			  justifyContent: "center",
+			  width: "100%",
+			  borderRadius: ".19rem",
+			  boxShadow: "0px .19rem .41rem rgba(0,0,0,.25)"
+		}
+		const tableStyle = {
+		    borderCollapse: "separate",
+			borderSpacing: "50px 10px"		
+		}
 		if (this.state.auctionsLoaded === 1 && this.state.bidsLoaded === 1 && this.state.yourAuctionsLoaded === 0)
 			this.refreshYourAuctions();
         return (
 			<div className="container">
-				<div className="container">
-					<h2>Your Bids</h2>
+				<div className="container" style={rootStyle1}>
 					<div className="container">
-	                    <table className="table">
+						<h2>Your Bids</h2>
+	                    <table className="table" style={tableStyle}>
 	                        <thead>
 	                            <tr>
 	                                <th>Id</th>
@@ -223,10 +253,11 @@ class ListAuctionsComponent extends Component {
 	                </div>
 
 				</div>
-	            <div className="container">
-	                <h2>All Auctions</h2>
+				<br/>
+	            <div className="container" style={rootStyle2}>
 	                <div className="container">
-	                    <table className="table">
+		                <h2>All Auctions</h2>
+	                    <table className="table" style={tableStyle}>
 	                        <thead>
 	                            <tr>
 	                                <th>Id</th>

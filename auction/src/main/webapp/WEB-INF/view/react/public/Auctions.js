@@ -115,7 +115,7 @@ class ListAuctionsComponent extends Component {
 	
 	checkTopBid(bid) {
 		if (bid == -1)
-			return "no bids yet";
+			return "No bids yet";
 		else 
 			return bid;
 	}
@@ -210,6 +210,10 @@ class ListAuctionsComponent extends Component {
 			  borderRadius: ".19rem",
 			  boxShadow: "0px .19rem .41rem rgba(0,0,0,.25)"
 		}
+		const tableStyle = {
+		    borderCollapse: "separate",
+			borderSpacing: "50px 10px"		
+		}
 		if (this.state.auctionsLoaded === 1 && this.state.bidsLoaded === 1 && this.state.yourAuctionsLoaded === 0)
 			this.refreshYourAuctions();
         return (
@@ -217,7 +221,7 @@ class ListAuctionsComponent extends Component {
 				<div className="container" style={rootStyle1}>
 					<div className="container">
 						<h2>Your Bids</h2>
-	                    <table className="table">
+	                    <table className="table" style={tableStyle}>
 	                        <thead>
 	                            <tr>
 	                                <th>Id</th>
@@ -253,7 +257,7 @@ class ListAuctionsComponent extends Component {
 	            <div className="container" style={rootStyle2}>
 	                <div className="container">
 		                <h2>All Auctions</h2>
-	                    <table className="table">
+	                    <table className="table" style={tableStyle}>
 	                        <thead>
 	                            <tr>
 	                                <th>Id</th>

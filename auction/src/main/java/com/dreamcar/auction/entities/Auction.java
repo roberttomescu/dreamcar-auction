@@ -169,7 +169,7 @@ public class Auction {
 		try {
 			return this.findTopBid().getPrice();
 		}
-		catch (NoSuchElementException e) {
+		catch (Exception e) {
 			return -1;
 		}
 	}
